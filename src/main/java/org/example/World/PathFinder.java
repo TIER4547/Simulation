@@ -46,7 +46,6 @@ public class PathFinder {
     public List<Coordinates> restoreFullPath(Coordinates start, Coordinates target, java.util.Map<Coordinates, Coordinates> cameFrom){
         List<Coordinates> path = new ArrayList<>();
         Coordinates current = target;
-        // a > b > c > target > M
         while(!current.equals(start)){
             path.add(current);
             current = cameFrom.get(current);
