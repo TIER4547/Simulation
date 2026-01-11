@@ -18,10 +18,11 @@ public class Actions {
     private final org.example.World.Map.Map map;
     private Random random = new Random();
     private final List<Move> plannedMoves = new ArrayList<>();
-    private PathFinder pathFinder;
+    private final PathFinder pathFinder;
 
-    public Actions(Map map) {
+    public Actions(Map map, PathFinder pathFinder) {
         this.map = map;
+        this.pathFinder = pathFinder;
     }
 
     public void turnActions() {
@@ -31,7 +32,6 @@ public class Actions {
         for (Entity entity : new ArrayList<>(map.getEntities())) {
             if (entity instanceof Creature creature){
                 Set<CoordinatesShift> moveList = creature.getCreatureMoves();
-                List<Coordinates> path = null;
                 Coordinates target = map.getEntityCoordinates(creature);
                 boolean hasAction = false;
                 if (targetForAttack.contains(target)){
@@ -42,6 +42,7 @@ public class Actions {
                         hasAction = true;
                         continue;}
                 }
+                List<Coordinates> path = null;
                 if (!hasAction){
                 if (creature instanceof Predator){
                     path = pathFinder.bfs(creature, Herbivore.class, map);
